@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Operating Systems </p>
+          <h1>CPU Scheduling Simulator</h1>
+          <p class="hero-text">
+            Compare FCFS, SJF, Round Robin, and Priority Scheduling with a live
+            Gantt chart, process timeline, and performance metrics.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="stat-chip">
+            <span>Algorithms</span>
+            <strong>4</strong>
+          </div>
+          <div class="stat-chip">
+            <span>Views</span>
+            <strong>Realtime</strong>
+          </div>
+          <div class="stat-chip">
+            <span>Metrics</span>
+            <strong>Waiting / TAT</strong>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="panel controls-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Input</p>
+              <h2>Process Builder</h2>
+            </div>
+            <button id="loadSampleBtn" class="ghost-button">Load Sample</button>
+          </div>
+
+          <form id="processForm" class="process-form">
+            <label>
+              Process ID
+              <input id="processId" type="text" maxlength="8" placeholder="P1" required />
+            </label>
+            <label>
+              Arrival Time
+              <input id="arrivalTime" type="number" min="0" step="1" placeholder="0" required />
+            </label>
+            <label>
+              Burst Time
+              <input id="burstTime" type="number" min="1" step="1" placeholder="5" required />
+            </label>
+            <label>
+              Priority
+              <input id="priority" type="number" min="1" step="1" placeholder="2" required />
+            </label>
+            <button type="submit" class="primary-button">Add Process</button>
+          </form>
+
+          <div class="algorithm-controls">
+            <label>
+              Algorithm
+              <select id="algorithm">
+                <option value="fcfs">First Come First Serve</option>
+                <option value="sjf">Shortest Job First</option>
+                <option value="rr">Round Robin</option>
+                <option value="priority">Priority Scheduling</option>
+              </select>
+            </label>
+            <label>
+              Execution Mode
+              <select id="mode">
+                <option value="non-preemptive">Non-Preemptive</option>
+                <option value="preemptive">Preemptive</option>
+              </select>
+            </label>
+            <label id="quantumField">
+              Time Quantum
+              <input id="timeQuantum" type="number" min="1" step="1" value="2" />
+            </label>
+          </div>
+
+          <div class="action-row">
+            <button id="simulateBtn" class="primary-button">Run Simulation</button>
+            <button id="clearBtn" class="ghost-button" type="button">Clear All</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Data</p>
+              <h2>Process Queue</h2>
+            </div>
+            <span id="processCount" class="badge">0 Processes</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Arrival</th>
+                  <th>Burst</th>
+                  <th>Priority</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody id="processTableBody">
+                <tr class="empty-row">
+                  <td colspan="5">Add processes to start exploring scheduler behavior.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel metrics-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Output</p>
+              <h2>Performance Metrics</h2>
+            </div>
+          </div>
+          <div id="metricsCards" class="metrics-cards">
+            <article class="metric-card">
+              <span>Average Waiting Time</span>
+              <strong>0.00</strong>
+            </article>
+            <article class="metric-card">
+              <span>Average Turnaround Time</span>
+              <strong>0.00</strong>
+            </article>
+            <article class="metric-card">
+              <span>CPU Utilization</span>
+              <strong>0.00%</strong>
+            </article>
+            <article class="metric-card">
+              <span>Throughput</span>
+              <strong>0.00</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel gantt-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Visualization</p>
+              <h2>Gantt Chart</h2>
+            </div>
+            <span id="activeAlgorithm" class="badge">No Simulation Yet</span>
+          </div>
+          <div id="ganttChart" class="gantt-chart empty-state">
+            Run a simulation to generate the timeline.
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Breakdown</p>
+              <h2>Per-Process Results</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Completion</th>
+                  <th>Waiting</th>
+                  <th>Turnaround</th>
+                  <th>Response</th>
+                </tr>
+              </thead>
+              <tbody id="resultsTableBody">
+                <tr class="empty-row">
+                  <td colspan="5">Metrics for each process will appear here.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
